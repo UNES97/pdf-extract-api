@@ -2,13 +2,12 @@ services:
   web:
     build: ./app
     container_name: fastapi_app
-    working_dir: /app
     command: >
       bash -c "
       if [ \"$APP_ENV\" = 'production' ]; then 
-        uvicorn main:app --host 0.0.0.0 --port 8000;
+        uvicorn app.main:app --host 0.0.0.0 --port 8000;
       else 
-        uvicorn main:app --host 0.0.0.0 --port 8000 --reload;  
+        uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload;  
       fi"
     ports:
       - "8090:8000"
