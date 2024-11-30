@@ -2,12 +2,13 @@ services:
   web:
     build: ./app
     container_name: fastapi_app
+    working_dir: /app
     command: >
       bash -c "
       if [ \"$APP_ENV\" = 'production' ]; then 
-        uvicorn src.main:app --host 0.0.0.0 --port 8000;
+        uvicorn main:app --host 0.0.0.0 --port 8000;
       else 
-        uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload;  
+        uvicorn main:app --host 0.0.0.0 --port 8000 --reload;  
       fi"
     ports:
       - "8090:8000"
@@ -27,9 +28,9 @@ services:
       - redis
       - ollama
     volumes:
-      - ./storage_profiles:/storage_profiles  # Mount the storage profiles to enable file uploads
-      - ./storage:/storage  # Mount the storage directory to enable file uploads
-      - ./app:/app  # Mount the app directory to enable auto-reloading      
+      - ./storage_profiles:/storage_profiles
+      - ./storage:/storage
+      - ./app:/app      
 
   celery_worker:
     build: ./app
