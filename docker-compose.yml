@@ -5,9 +5,9 @@ services:
     command: >
       bash -c "
       if [ \"$APP_ENV\" = 'production' ]; then 
-        uvicorn app.main:app --host 0.0.0.0 --port 8000;
+        uvicorn main:app --host 0.0.0.0 --port 8000;
       else 
-        uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload;  
+        uvicorn main:app --host 0.0.0.0 --port 8000 --reload;  
       fi"
     ports:
       - "8090:8000"
@@ -17,8 +17,8 @@ services:
       - LLM_PULL_API_URL=${LLM_PULL_API_URL-http://web:8000/llm_pull}
       - LLM_GENEREATE_API_URL=${LLM_GENEREATE_API_URL-http://web:8000/llm_generate}
       - OLLAMA_HOST=${OLLAMA_HOST-http://ollama:11434}
-      - APP_ENV=${APP_ENV-development}  # Default to development mode
-      - STORAGE_PROFILE_PATH=${STORAGE_PROFILE_PATH-/storage_profiles}  # Add the storage profile path
+      - APP_ENV=${APP_ENV-production}
+      - STORAGE_PROFILE_PATH=${STORAGE_PROFILE_PATH-/storage_profiles}
       - LIST_FILES_URL=${LIST_FILES_URL-http://localhost:8000/storage/list}
       - LOAD_FILE_URL=${LOAD_FILE_URL-http://localhost:8000/storage/load}
       - DELETE_FILE_URL=${DELETE_FILE_URL-http://localhost:8000/storage/delete}
