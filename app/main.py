@@ -25,6 +25,10 @@ app = FastAPI()
 redis_url = os.getenv('REDIS_CACHE_URL', 'redis://redis:6379/1')
 redis_client = redis.StrictRedis.from_url(redis_url)
 
+@app.get("/")
+async def read_root():
+    return {"message": "Hello, World!"}
+
 @app.post("/ocr")
 async def ocr_endpoint(
     strategy: str = Form(...),
